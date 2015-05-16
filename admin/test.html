@@ -1,0 +1,32 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+	$.getJSON( "http://rush00.local.42.fr:8080/api/get_basket.php", {})
+	.done(function( json ) {
+		console.log( "JSON Data: " + json[0]);
+	})
+	.fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "Request Failed: " + err );
+	});
+
+	var AssocArray = {};  // <- initialize an object, not an array
+
+	AssocArray[0] = 5;
+	AssocArray[4] = 2;
+	AssocArray[2] = 42;
+
+	console.log(AssocArray);
+
+	AssocArray[5] = 1;
+
+	var jsonbasket = JSON.stringify(AssocArray);
+	console.log(jsonbasket);
+	$.getJSON( "http://rush00.local.42.fr:8080/api/set_basket.php", "{basket:" + jsonbasket + "}")
+	.done(function( json ) {
+		console.log( "JSON Data: " + json.status);
+	})
+	.fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "Request Failed: " + err );
+	});
+</script>
