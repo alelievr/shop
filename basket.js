@@ -6,7 +6,7 @@
 //   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/12 19:19:22 by alelievr          #+#    #+#             //
-//   Updated: 2015/05/16 18:07:16 by alelievr         ###   ########.fr       //
+//   Updated: 2015/05/16 21:05:53 by alelievr         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -50,7 +50,6 @@ function check_double_bascket(id, quantity)
 			var		html = $("#" + doc[i].id + " .basket_list_item_quantity").html();
 			var		qtyid = parseInt(html.split("qty_")[1]);
 			var		newqty = parseInt(html.split(">")[1]) + parseInt(quantity);
-			console.log(i);
 			local_basket[i - 1].qty += parseInt(quantity);
 			$("#" + doc[i].id + " .basket_list_item_quantity").html("quantity: <div id=qty_"
 				+ qtyid + ">" + newqty + "</div>");
@@ -66,7 +65,8 @@ function update_basket_total_price()
 	var		total = 0;
 	
 	for (var b of local_basket)
-		total += b.qty * b.price;
+		if (b)
+			total += b.qty * b.price;
 	total = Math.round(total * 100) / 100;
 	$("#basket_total_price").html("Total: " + total + "$");
 }

@@ -6,7 +6,7 @@
 //   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 21:13:54 by alelievr          #+#    #+#             //
-//   Updated: 2015/05/16 18:47:11 by alelievr         ###   ########.fr       //
+//   Updated: 2015/05/16 21:06:03 by alelievr         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -156,7 +156,7 @@ function item_buy()
 
 	//update the basket
 	addTo_basket($("#item_prec_img").attr("src"), $("#item_prec_id").html(),
-			$("#item_pre_title").html(), $("#item_prec_price").html(), /*basket[$("#item_prec_id").html()]*/
+			$("#item_pre_title").html(), products[$("#item_prec_id").html()].price,
 			$("#item_prec_quantity_val").val());
 	count++;
 }

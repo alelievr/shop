@@ -6,7 +6,7 @@
 //   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/12 18:57:33 by alelievr          #+#    #+#             //
-//   Updated: 2015/05/16 20:45:13 by alelievr         ###   ########.fr       //
+//   Updated: 2015/05/16 21:11:36 by alelievr         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -42,7 +42,6 @@ function rotate_z(rep, speed) { rep.rotation.z += speed; }
 
 function anim_remove_item(src, state, id)
 {
-	console.log("anim for id = " + id + " posx = " + state.x + " posy = " + state.y + " posz = " + state.z);
 	src.position.x = state.x;
 	src.position.y = state.y;
 	src.position.z = state.z;
@@ -57,12 +56,10 @@ function remove_elem(id)
 		save_pos[id].x = src.x;
 		save_pos[id].y = src.y;
 		save_pos[id].z = src.z;
-		console.log(save_pos[id]);
 		save_pos_del[id] = new THREE.Vector3();
 		save_pos_del[id].x = src.x;
 		save_pos_del[id].y = src.y + del_top;
 		save_pos_del[id].z = src.z;
-		console.log(save_pos_del[id]);
 	}
 	var	tmp = new THREE.Vector3(src.x, src.y + del_top, src.z);
 
@@ -71,6 +68,7 @@ function remove_elem(id)
 		.delay(0)
 		.easing(TWEEN.Easing.Exponential.InOut)
 		.onUpdate(function(){anim_remove_item(objects[id], src, id)})
+//		.onComplete(function(){$("#" + id).css("display", "none")})
 		.start();
 }
 
@@ -83,7 +81,7 @@ function readd_elem(id)
 		.delay(0)
 		.easing(TWEEN.Easing.Exponential.InOut)
 		.onUpdate(function(){anim_remove_item(objects[id], src, id)})
-		.onComplete(function(){pivot.remove(save_pos[id])})
+//		.onStart(function(){$("#" + id).css("display", "block")})
 		.start();
 }
 
@@ -114,8 +112,6 @@ function create_elem(class_name, scene)
 		};
 		scene.add(objects[i]);
 	}
-	console.log("products = ");
-	console.log(products);
 	len = dom.length;
 	setTimeout(apply_css, 200);
 	return (objects);
@@ -129,7 +125,6 @@ function apply_css()
 	{
 		$("#" + i + " .item_title").css("bottom", "-50px");
 		var		height = $("#" + i + " .item_img").innerHeight();
-		console.log("heights = " + height);
 		$("#" + i + " .item_title_price").css("bottom", "-" + height + "px");
 	}
 }
@@ -202,8 +197,6 @@ function random()
 
 function transform(targets, duration)
 {
-	TWEEN.removeAll();
-
 	for (var i = 0; i < len; ++i)
 	{
 		var object = objects[i];
@@ -322,15 +315,11 @@ function render()
 
 function call_search(str)
 {
-	console.log("recherche = " + str);
 	for (p of products)
-		if (p)
+		if (p && p.qty > 0)
 		{
 			if ((p.name.indexOf(str) == -1 && p.description.indexOf(str) == -1))
-			{
-				console.log("removed " + p.obj_id);
 				remove_elem(p.obj_id);
-			}
 			else
 			{
 				if (save_pos[p.obj_id])
